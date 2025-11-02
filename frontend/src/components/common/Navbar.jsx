@@ -139,6 +139,13 @@ const Navbar = () => {
           >
             <span className="text-xs">login</span>
           </Link>
+           <Link
+            to="/register" // ✅ Route for your "Add" or "Create" page
+            className="hover:text-green-600 transition"
+            title="Add New"
+          >
+            <span className="text-xs">signup</span>
+          </Link>
         </nav>
       </div>
     </>
