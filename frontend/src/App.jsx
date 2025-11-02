@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import UserLayout from "./components/layout/UserLayout.jsx";
-import Home from "./pages/Home.jsx";
+
 import { Toaster } from "sonner";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
@@ -13,6 +13,7 @@ import OrderDetailsPage from "./pages/OrderDetailsPage.jsx";
 import MyOrdersPage from "./pages/MyOrdersPage.jsx";
 import PostCar from "./Pages/postCar.jsx";
 import { CartProvider } from "./components/context/cartContext.jsx" // ✅ import context
+import Home from "./Pages/Home.jsx";
 
 function App() {
   return (
