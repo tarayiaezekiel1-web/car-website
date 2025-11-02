@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import ProductsGrid from "./ProductsGrid";
 import { useCart } from "../context/cartContext";
 import { useNavigate } from "react-router-dom";
+import api from "../../lib/axios";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -25,9 +26,9 @@ const ProductDetails = () => {
       
       try {
         // 1. Fetch main car details
-        const carRes = await axios.get(`http://localhost:5000/api/cars/${id}`);
-        const fetchedCar = carRes.data.car;
-        setCar(fetchedCar);
+     const carRes = await api.get(`/cars/${id}`);
+const fetchedCar = carRes.data.car;
+setCar(fetchedCar);
 
         // 2. Fetch similar cars based on a property (e.g., model or fuelType)
         if (fetchedCar && fetchedCar.model) {
