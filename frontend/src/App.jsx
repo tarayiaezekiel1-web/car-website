@@ -4,7 +4,7 @@ import UserLayout from "./components/layout/UserLayout.jsx";
 import { Toaster } from "sonner";
 
 
-import Profile from "./pages/Profile.jsx";
+
 import CollectionPage from "./pages/CollectionPage.jsx";
 import ProductDetails from "./components/products/ProductDetails.jsx";
 import CheckOut from "./components/cart/CheckOut.jsx";
@@ -17,6 +17,7 @@ import Home from "./Pages/Home.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./Pages/Register.jsx"
 
+
 function App() {
   return (
     <BrowserRouter>
@@ -27,7 +28,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="login" element={<Login />} />
            <Route path="register" element={<Register/>}/>
-            <Route path="profile" element={<Profile />} />
+            
             <Route path="collections/:collection" element={<CollectionPage />} />
             <Route path="product/:id" element={<ProductDetails />} />
             <Route path="checkout" element={<CheckOut />} />

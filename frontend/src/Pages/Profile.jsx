@@ -1,10 +1,10 @@
 import React from 'react'
-import MyOrdersPage from './MyOrdersPage'
+im
 
 const Profile = () => {
   return (
     <div className='min-h-screen flex flex-col'>
-        <div className='flex-grow container mx-outo p-4 md:p-6 '>
+        <div className='flex container mx-outo p-4 md:p-6 '>
             <div className='flex flex-col md:flex-row md:space-x-5 space-y-5 md:space'>
                 {/** left section*/}
                 <div className='w-full md:w-1/3 lg:w-1/4 shadow-md rounded-lg p-6'>
@@ -16,7 +16,7 @@ const Profile = () => {
                 <div>
                     {/**right section */}
                     <div className='w-full md:w-2/3 lg:w3/4'> 
-                    <MyOrdersPage/>
+                  
                     </div>
                 </div>
             </div>
