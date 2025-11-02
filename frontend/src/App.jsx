@@ -19,6 +19,8 @@ import Register from "./Pages/Register.jsx"
 
 
 
+
+
 function App() {
   return (
     <BrowserRouter>
@@ -27,7 +29,7 @@ function App() {
         <Routes>
           <Route path="/" element={<UserLayout />}>
             <Route index element={<Home />} />
-           
+          
            <Route path="register" element={<Register/>}/>
             
             <Route path="collections/:collection" element={<CollectionPage />} />

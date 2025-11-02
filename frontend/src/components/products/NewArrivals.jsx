@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { FiChevronLeft, FiChevronRight, FiMapPin } from "react-icons/fi";
 import { FaGasPump, FaCogs, FaCalendarAlt } from "react-icons/fa";
+import api from "../../lib/axios";
 
 const NewArrivals = () => {
   const scrollRef = useRef(null);
@@ -10,12 +11,11 @@ const NewArrivals = () => {
   const [canScrollRight, setCanScrollRight] = useState(false);
 
   // Fetch only new arrival cars
-  useEffect(() => {
-    const fetchCars = async () => {
-      try {
-        const res = await axios.get("http://localhost:5000/api/cars", {
-          withCredentials: true,
-        });
+
+useEffect(() => {
+  const fetchCars = async () => {
+    try {
+      const res = await api.get("/cars", { withCredentials: true }); //
 
         const allCars = res.data.cars || res.data;
         const newArrivalCars = allCars.filter(

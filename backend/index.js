@@ -9,7 +9,7 @@ import authRoutes from "./routes/authRoutes.js";
 import carRoutes from "./routes/carRoutes.js";
 import { connectDB } from "./config/db.js";
 
-// ⭐ ES Modules fix for __dirname
+// ⭐ Fix __dirname for ES Modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -23,10 +23,11 @@ const NODE_ENV = process.env.NODE_ENV || "development";
 app.use(express.json({ limit: "10mb" }));
 app.use(cookieParser());
 
+// ✅ CORS only in development
 if (NODE_ENV !== "production") {
   app.use(
     cors({
-      origin: "http://localhost:5173", // your frontend dev URL
+      origin: "http://localhost:5173",
       credentials: true,
     })
   );
@@ -36,23 +37,24 @@ if (NODE_ENV !== "production") {
 app.use("/api/auth", authRoutes);
 app.use("/api/cars", carRoutes);
 
-// ✅ Production: Serve Frontend Build
-// ✅ Production: Serve Frontend Build
+// ✅ Serve Frontend in Production
 if (NODE_ENV === "production") {
-  const frontendDistPath = path.resolve(__dirname, "../frontend/dist");
-  app.use(express.static(frontendDistPath));
+  const frontendPath = path.join(__dirname, "frontend", "dist");
+  app.use(express.static(frontendPath));
 
-  // ✅ React Router Fallback (fixes 404 on page refresh)
-  app.get("/", (req, res) => {
-    res.sendFile(path.join(frontendDistPath, "index.html"));
-  });
+  // ⭐ FIX: Serve index.html for ALL routes (React Router fallback)
+ app.use((req, res) => {
+  res.sendFile(path.resolve(frontendDistPath, "index.html"));
+});
+
+
 } else {
   app.get("/", (req, res) => {
     res.send("API is running...");
   });
 }
 
-// ✅ Global Error Handler (optional but useful)
+// ✅ Global Error Handler
 app.use((err, req, res, next) => {
   console.error("💥 Error:", err.message);
   res.status(500).json({ message: "Server Error", error: err.message });

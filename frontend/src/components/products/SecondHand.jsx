@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import api from "../../lib/axios";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 const SecondHand = () => {
@@ -8,12 +9,11 @@ const SecondHand = () => {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
 
-  useEffect(() => {
-    const fetchCars = async () => {
-      try {
-        const res = await axios.get("http://localhost:5000/api/cars", {
-          withCredentials: true,
-        });
+
+useEffect(() => {
+  const fetchCars = async () => {
+    try {
+      const res = await api.get("/cars", { withCredentials: true }); //
 
         const allCars = res.data.cars || res.data;
         const filtered = allCars.filter(

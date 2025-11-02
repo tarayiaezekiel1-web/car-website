@@ -4,6 +4,7 @@ import CarFilterSidebar from "../components/products/FilterSidebar";
 import SortOptions from "../components/products/SortOptions";
 import ProductsGrid from "../components/products/ProductsGrid";
 import axios from "axios";
+import api from "../lib/axios";
 
 const CollectionPage = () => {
   const [products, setProducts] = useState([]);
@@ -34,7 +35,7 @@ const CollectionPage = () => {
       }
       
       const query = new URLSearchParams(queryParams).toString();
-      const res = await axios.get(`http://localhost:5000/api/cars?${query}`);
+       const res = await api.get(`/cars?${query}`); // ✅ use api instance
       
       setProducts(res.data.cars || []);
     } catch (error) {

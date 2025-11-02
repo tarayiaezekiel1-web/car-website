@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import api from "../lib/axios";
 import register from "../assets/register.webp";
 
 const Register = () => {
@@ -8,15 +9,14 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    try {
-      const res = await axios.post("http://localhost:5000/api/auth/signup", {
-        username,
-        password,
-      });
-
+  try {
+    const res = await api.post("/auth/signup", {
+      username,
+      password,
+    });
       setMessage("Account created successfully 🎉");
       console.log(res.data);
     } catch (error) {
