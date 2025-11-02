@@ -14,8 +14,9 @@ import MyOrdersPage from "./Pages/MyOrdersPage.jsx";
 import PostCar from "./Pages/postCar.jsx";
 import { CartProvider } from "./components/context/cartContext.jsx" // ✅ import context
 import Home from "./Pages/Home.jsx";
-import Login from "./pages/Login.jsx";
+
 import Register from "./Pages/Register.jsx"
+
 
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
         <Routes>
           <Route path="/" element={<UserLayout />}>
             <Route index element={<Home />} />
-            <Route path="login" element={<Login />} />
+           
            <Route path="register" element={<Register/>}/>
             
             <Route path="collections/:collection" element={<CollectionPage />} />
