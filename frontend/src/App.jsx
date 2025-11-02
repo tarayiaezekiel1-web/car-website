@@ -5,12 +5,12 @@ import { Toaster } from "sonner";
 
 
 
-import CollectionPage from "./pages/CollectionPage.jsx";
+import CollectionPage from "./Pages/CollectionPage.jsx";
 import ProductDetails from "./components/products/ProductDetails.jsx";
 import CheckOut from "./components/cart/CheckOut.jsx";
-import OrdersConfirmationPage from "./pages/OrdersConfirmationPage.jsx";
-import OrderDetailsPage from "./pages/OrderDetailsPage.jsx";
-import MyOrdersPage from "./pages/MyOrdersPage.jsx";
+import OrdersConfirmationPage from "./Pages/OrdersConfirmationPage.jsx";
+import OrderDetailsPage from "./Pages/OrderDetailsPage.jsx";
+import MyOrdersPage from "./Pages/MyOrdersPage.jsx";
 import PostCar from "./Pages/postCar.jsx";
 import { CartProvider } from "./components/context/cartContext.jsx" // ✅ import context
 import Home from "./Pages/Home.jsx";

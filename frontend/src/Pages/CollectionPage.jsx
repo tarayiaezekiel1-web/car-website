@@ -84,7 +84,7 @@ const CollectionPage = () => {
       </div>
 
       {/* Cars grid */}
-      <div className="flex-grow p-4">
+      <div className="flex p-4">
         <h3 className="text-xl uppercase mb-4">All Cars ({products.length})</h3>
         
         {/* Pass the handler and current value to the SortOptions component */}
