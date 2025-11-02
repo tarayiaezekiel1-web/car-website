@@ -37,16 +37,15 @@ app.use("/api/auth", authRoutes);
 app.use("/api/cars", carRoutes);
 
 // ✅ Production: Serve Frontend Build
+// ✅ Production: Serve Frontend Build
 if (NODE_ENV === "production") {
   const frontendDistPath = path.resolve(__dirname, "../frontend/dist");
   app.use(express.static(frontendDistPath));
 
-  // ⭐ FIX: Use regex-based wildcard for React Router
-// ✅ Fixed version for Express 5
-app.use((req, res, next) => {
-  res.sendFile(path.join(frontendDistPath, "index.html"));
-});
-
+  // ✅ React Router Fallback (fixes 404 on page refresh)
+  app.get("/", (req, res) => {
+    res.sendFile(path.join(frontendDistPath, "index.html"));
+  });
 } else {
   app.get("/", (req, res) => {
     res.send("API is running...");
