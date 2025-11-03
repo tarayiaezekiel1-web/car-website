@@ -49,6 +49,13 @@ const Navbar = () => {
           <Link to="#" className="text-gray-600 hover:text-black text-sm uppercase">
             Top Sales
           </Link>
+          <Link
+            to="/register" // ✅ Route for your "Add" or "Create" page
+            className="hover:text-green-600 text-sm uppercase transition"
+            title="Add New"
+          >
+            <span className="text-xs">signup</span>
+          </Link>
         </div>
 
         {/* Right Side Icons */}
@@ -105,7 +112,7 @@ const Navbar = () => {
         <h2 className="text-xl font-semibold mb-4 px-4">Menu</h2>
         <nav className="space-y-4 px-4">
           <Link
-            to="#"
+            to="collections/all"
             onClick={toggleNavDrawer}
             className="block text-gray-600 hover:text-black"
           >
@@ -132,13 +139,7 @@ const Navbar = () => {
           >
             second hand
           </Link>
-          <Link
-            to="/login" // ✅ Route for your "Add" or "Create" page
-            className="hover:text-green-600 transition"
-            title="Add New"
-          >
-            <span className="text-xs">login</span>
-          </Link>
+         
            <Link
             to="/register" // ✅ Route for your "Add" or "Create" page
             className="hover:text-green-600 transition"

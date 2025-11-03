@@ -3,11 +3,14 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import api from "../lib/axios";
 import register from "../assets/register.webp";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+
+  const navigate = useNavigate()
 
 const handleSubmit = async (e) => {
   e.preventDefault();
@@ -19,6 +22,7 @@ const handleSubmit = async (e) => {
     });
       setMessage("Account created successfully 🎉");
       console.log(res.data);
+      navigate("/")
     } catch (error) {
       console.error("Registration error:", error);
       setMessage(error.response?.data?.message || "Registration failed ❌");
