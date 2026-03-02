@@ -1,8 +1,5 @@
 
 
-import { TbBrandMeta } from "react-icons/tb"
-import { IoLogoInstagram } from "react-icons/io"
-import { RiTwitterXLine } from "react-icons/ri"
 /*
 const Topbar=()=>{
     return (
@@ -26,6 +23,11 @@ const Topbar=()=>{
 export default Topbar
 
 */
+
+import { TbBrandMeta } from "react-icons/tb"
+import { IoLogoInstagram } from "react-icons/io"
+import { RiTwitterXLine } from "react-icons/ri"
+
 const Topbar = () => {
   return (
     <div className="bg-red-500 text-white">
@@ -58,6 +60,31 @@ const Topbar = () => {
 export default Topbar
 
 /*
+function Topbar(){
+return(
+    <div className="bg-red-500 text-white">
+        <div className="container mx-auto flex justify-between items-center">
+            <a href="#" className="hover:text-black">
+                <TbBrandMeta/>
+
+            </a>
+            <div className="text-sm text-center grow">
+                <span>we ship world wide</span>
+            </div>
+            <div className="text-sm hidden md:block">
+                <a href="0794494797" className="text-xs">0794494797</a>
+            </div>
+        </div>
+
+    </div>
+)
+}
+export default Topbar
+*/
+
+/*
+
+
 import { TbBrandMeta } from "react-icons/tb"
 import { IoLogoInstagram } from "react-icons/io"
 import { RiTwitterXLine } from "react-icons/ri"

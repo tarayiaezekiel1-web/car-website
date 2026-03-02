@@ -24,15 +24,18 @@ app.use(cookieParser());
 
 
 // 1. DEVELOPMENT CONFIG (CORS)
-if (process.env.NODE_ENV !== "production") {
-  // Only enable CORS for the development frontend origin
+//very important line of code but comment for now
+//if (process.env.NODE_ENV !== "production") {
+   //Only enable CORS for the development frontend origin
   app.use(
     cors({
       origin: "http://localhost:5173",
       credentials: true,
     })
   );
-}
+//}
+
+
 
 // 2. API Routes (MUST be before static serving)
 app.use("/api/auth", authRoutes);
