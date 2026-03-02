@@ -71,8 +71,8 @@ import Register from "./Pages/Register.jsx";
 import { CartProvider } from "./components/context/cartContext.jsx";
 
 // 🔹 NEW Construction Pages
-import Construction from "./Pages/construction.jsx";
-import ConstructionProjects from "./Pages/constructionProjects.jsx";
+import Construction from "./Pages/Construction.jsx";
+import ConstructionProjects from "./Pages/ConstructionProjects.jsx";
 import ProjectDetails from "./Pages/ProjectDetails.jsx";
 import About from "./Pages/About.jsx";
 import Impact from "./Pages/Impact.jsx";
