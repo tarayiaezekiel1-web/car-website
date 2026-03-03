@@ -71,6 +71,8 @@ export default Construction;
 */
 import React from "react";
 import Heros from "../components/layout/Heros";
+import House10 from "../assets/House10.jpg"
+import House11 from "../assets/House11.jpg"
 // replace with your image path
 import { FaMapMarkerAlt, FaCalendarAlt, FaWhatsapp, FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
 
@@ -131,7 +133,7 @@ const Construction = () => {
         <h2 className="text-3xl font-semibold mb-6">
           We believe that durability is vitally important
         </h2>
-        <img
+        <img src={House11}
         
           alt="Durability"
           className="w-4/5 mx-auto rounded mb-6 shadow-lg"
@@ -142,7 +144,7 @@ const Construction = () => {
           contribution: health and safety, ethics, green initiatives, community,
           investment, and diversity and inclusion.
         </p>
-        <img
+        <img src={House10}
           
           alt="Our approach"
           className="w-4/5 mx-auto rounded shadow-lg"

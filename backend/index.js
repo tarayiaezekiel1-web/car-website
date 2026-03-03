@@ -25,7 +25,7 @@ app.use(cookieParser());
 
 // 1. DEVELOPMENT CONFIG (CORS)
 //very important line of code but comment for now
-//if (process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV !== "production") {
    //Only enable CORS for the development frontend origin
   app.use(
     cors({
@@ -33,7 +33,7 @@ app.use(cookieParser());
       credentials: true,
     })
   );
-//}
+}
 
 
 
