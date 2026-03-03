@@ -1,18 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
-import api from "../../lib/axios";
 
-const RecomendedCars= () => {
+const RecomendedCars = () => {
   const scrollRef = useRef(null);
   const [cars, setCars] = useState([]);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
 
-useEffect(() => {
-  const fetchCars = async () => {
-    try {
-      const res = await api.get("/cars", { withCredentials: true }); //
+  useEffect(() => {
+    const fetchCars = async () => {
+      try {
+        // ✅ Use backend URL from environment variable
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/cars`, {
+          withCredentials: true,
+        });
 
         const allCars = res.data.cars || res.data;
         const filtered = allCars.filter(
@@ -54,7 +56,7 @@ useEffect(() => {
   return (
     <section className="relative py-10 px-4 lg:px-0">
       <div className="container mx-auto text-center mb-10">
-        <h2 className="text-2xl font-bold mb-4 capitalize">Recomended Cars</h2>
+        <h2 className="text-2xl font-bold mb-4 capitalize">Recommended Cars</h2>
         <p className="text-sm text-gray-500 mb-8 tracking-tight max-w-md mx-auto">
           Check out the most popular cars our customers love and buy the most.
         </p>
@@ -93,9 +95,7 @@ useEffect(() => {
               className="min-w-[300px] flex-shrink-0 relative rounded-lg overflow-hidden group"
             >
               <img
-                src={
-                  car.image?.startsWith("http") ? car.image : `/placeholder.png`
-                }
+                src={car.image?.startsWith("http") ? car.image : `/placeholder.png`}
                 alt={car.name || "Car"}
                 className="w-full h-[400px] object-cover rounded-lg group-hover:scale-105 transition-transform duration-500"
               />
@@ -106,7 +106,7 @@ useEffect(() => {
             </div>
           ))
         ) : (
-          <p className="text-center text-gray-500 w-full">No top sales yet.</p>
+          <p className="text-center text-gray-500 w-full">No recommended cars yet.</p>
         )}
       </div>
     </section>

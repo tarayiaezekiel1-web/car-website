@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
-import api from "../../lib/axios";
 
 const TopSales = () => {
   const scrollRef = useRef(null);
@@ -9,11 +8,13 @@ const TopSales = () => {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
 
- 
-useEffect(() => {
-  const fetchCars = async () => {
-    try {
-      const res = await api.get("/cars", { withCredentials: true }); //
+  useEffect(() => {
+    const fetchCars = async () => {
+      try {
+        // ✅ Use environment variable for backend URL
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/cars`, {
+          withCredentials: true,
+        });
 
         const allCars = res.data.cars || res.data;
         const filtered = allCars.filter(

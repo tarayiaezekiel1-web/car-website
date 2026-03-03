@@ -69,10 +69,12 @@ const PostCar = () => {
 
     setIsSubmitting(true);
     try {
-      await axios.post("http://localhost:5000/api/cars", data, {
+      // ✅ Use environment variable for backend URL
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/cars`, data, {
         withCredentials: true,
         headers: { "Content-Type": "multipart/form-data" },
       });
+
       toast.success("✅ Car posted successfully!");
       setFormData({
         name: "",
@@ -101,13 +103,9 @@ const PostCar = () => {
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input type="text" name="name" placeholder="Car Name" value={formData.name} onChange={handleChange} className="border p-2 rounded" />
-
         <input type="text" name="model" placeholder="Model (e.g., Corolla, Civic)" value={formData.model} onChange={handleChange} className="border p-2 rounded" />
-
         <input type="text" name="brand" placeholder="Brand" value={formData.brand} onChange={handleChange} className="border p-2 rounded" />
-
         <input type="number" name="price" placeholder="Price" value={formData.price} onChange={handleChange} className="border p-2 rounded" />
-
         <input type="number" name="year" placeholder="Year of Manufacture" value={formData.year} onChange={handleChange} className="border p-2 rounded" />
 
         {/* Fuel Type */}
@@ -127,10 +125,9 @@ const PostCar = () => {
         </select>
 
         <input type="text" name="location" placeholder="Location" value={formData.location} onChange={handleChange} className="border p-2 rounded" />
-
         <textarea name="description" placeholder="Description" value={formData.description} onChange={handleChange} className="border p-2 rounded" />
 
-        {/* ✅ Category Dropdown */}
+        {/* Category Dropdown */}
         <select name="category" value={formData.category} onChange={handleChange} className="border p-2 rounded">
           <option value="">Select Category</option>
           <option value="newarrivals">New Arrivals</option>
