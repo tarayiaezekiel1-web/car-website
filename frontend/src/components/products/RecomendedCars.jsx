@@ -8,24 +8,23 @@ const RecomendedCars = () => {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
 
+  // Fetch recommended cars
   useEffect(() => {
     const fetchCars = async () => {
       try {
-        // ✅ Use backend URL from environment variable
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/cars`, {
-          withCredentials: true,
-        });
+        const API_BASE = import.meta.env.VITE_API_URL || "";
+        const res = await axios.get(`${API_BASE}/api/cars`, { withCredentials: true });
 
-        const allCars = res.data.cars || res.data;
-        const filtered = allCars.filter(
+        const allCars = Array.isArray(res.data.cars) ? res.data.cars : [];
+        const recommended = allCars.filter(
           (car) =>
             car.category &&
             car.category.toLowerCase().replace(/\s/g, "") === "recommended"
         );
 
-        setCars(filtered);
+        setCars(recommended);
       } catch (error) {
-        console.error("Error fetching cars:", error);
+        console.error("Error fetching recommended cars:", error);
       }
     };
 
@@ -34,7 +33,7 @@ const RecomendedCars = () => {
 
   const scroll = (direction) => {
     const scrollAmount = direction === "left" ? -300 : 300;
-    scrollRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    scrollRef.current?.scrollBy({ left: scrollAmount, behavior: "smooth" });
   };
 
   const updateScrollButtons = () => {
@@ -61,6 +60,7 @@ const RecomendedCars = () => {
           Check out the most popular cars our customers love and buy the most.
         </p>
 
+        {/* Scroll Buttons */}
         <div className="absolute right-8 top-1/2 -translate-y-1/2 flex space-x-2 z-10">
           <button
             onClick={() => scroll("left")}
@@ -71,7 +71,6 @@ const RecomendedCars = () => {
           >
             <FiChevronLeft />
           </button>
-
           <button
             onClick={() => scroll("right")}
             disabled={!canScrollRight}
@@ -84,27 +83,31 @@ const RecomendedCars = () => {
         </div>
       </div>
 
+      {/* Scrollable cars */}
       <div
         ref={scrollRef}
         className="container mx-auto overflow-x-scroll flex space-x-5 scrollbar-hide px-5 scroll-smooth"
       >
         {cars.length > 0 ? (
-          cars.map((car) => (
-            <div
-              key={car._id}
-              className="min-w-[300px] flex-shrink-0 relative rounded-lg overflow-hidden group"
-            >
-              <img
-                src={car.image?.startsWith("http") ? car.image : `/placeholder.png`}
-                alt={car.name || "Car"}
-                className="w-full h-[400px] object-cover rounded-lg group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-40 backdrop-blur-md text-white p-4">
-                <h4 className="font-semibold">{car.name}</h4>
-                <p className="mt-1 text-sm">Ksh {car.price}</p>
+          cars.map((car) => {
+            const imageUrl = car.image && car.image.startsWith("http") ? car.image : "/placeholder.png";
+            return (
+              <div
+                key={car._id}
+                className="min-w-[300px] flex-shrink-0 relative rounded-lg overflow-hidden group shadow-md hover:shadow-xl transition"
+              >
+                <img
+                  src={imageUrl}
+                  alt={car.name || "Car"}
+                  className="w-full h-[400px] object-cover rounded-lg group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-40 backdrop-blur-md text-white p-4">
+                  <h4 className="font-semibold">{car.name || "Unknown Car"}</h4>
+                  <p className="mt-1 text-sm">Ksh {car.price?.toLocaleString() || "N/A"}</p>
+                </div>
               </div>
-            </div>
-          ))
+            );
+          })
         ) : (
           <p className="text-center text-gray-500 w-full">No recommended cars yet.</p>
         )}

@@ -9,16 +9,24 @@ const NewArrivals = () => {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
 
-  // Fetch new arrivals
+  // Fetch new arrivals safely
   useEffect(() => {
     const fetchCars = async () => {
       try {
-        const res = await axios.get(
-          `${import.meta.env.VITE_API_URL}/api/cars`,
-          { withCredentials: true }
-        );
+        // Use environment variable if available, fallback to relative path
+        const API_BASE = import.meta.env.VITE_API_URL || "";
 
-        const allCars = res.data.cars || res.data;
+        const res = await axios.get(`${API_BASE}/api/cars`, {
+          withCredentials: true,
+        });
+
+        // Ensure we always have an array
+        const allCars = Array.isArray(res.data.cars)
+          ? res.data.cars
+          : Array.isArray(res.data)
+          ? res.data
+          : [];
+
         const newArrivalCars = allCars.filter(
           (car) =>
             car.category &&
@@ -37,9 +45,12 @@ const NewArrivals = () => {
   // Scroll controls
   const scroll = (direction) => {
     const scrollAmount = direction === "left" ? -300 : 300;
-    scrollRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    }
   };
 
+  // Update scroll button state
   const updateScrollButtons = () => {
     const container = scrollRef.current;
     if (!container) return;
@@ -70,7 +81,7 @@ const NewArrivals = () => {
             onClick={() => scroll("left")}
             disabled={!canScrollLeft}
             className={`p-2 rounded-full border bg-white shadow text-black hover:bg-gray-100 transition ${
-              !canScrollLeft && "opacity-30 cursor-not-allowed"
+              !canScrollLeft ? "opacity-30 cursor-not-allowed" : ""
             }`}
           >
             <FiChevronLeft />
@@ -79,7 +90,7 @@ const NewArrivals = () => {
             onClick={() => scroll("right")}
             disabled={!canScrollRight}
             className={`p-2 rounded-full border bg-white shadow text-black hover:bg-gray-100 transition ${
-              !canScrollRight && "opacity-30 cursor-not-allowed"
+              !canScrollRight ? "opacity-30 cursor-not-allowed" : ""
             }`}
           >
             <FiChevronRight />
@@ -94,7 +105,11 @@ const NewArrivals = () => {
       >
         {cars.length > 0 ? (
           cars.map((car) => {
-            const imageUrl = car.image?.startsWith("http") ? car.image : "/placeholder.png";
+            const imageUrl =
+              car.image && car.image.startsWith("http")
+                ? car.image
+                : "/placeholder.png"; // Make sure placeholder.png exists in public/
+
             return (
               <div
                 key={car._id}

@@ -21,28 +21,24 @@ const ProductDetails = () => {
       setCar(null);
 
       try {
-        // ✅ Use VITE_API_URL for production & development
-        const carRes = await axios.get(
-          `${import.meta.env.VITE_API_URL}/api/cars/${id}`,
-          { withCredentials: true }
-        );
-        const fetchedCar = carRes.data.car;
+        const API_BASE = import.meta.env.VITE_API_URL || "";
+
+        // Fetch main car
+        const carRes = await axios.get(`${API_BASE}/api/cars/${id}`, {
+          withCredentials: true,
+        });
+        const fetchedCar = carRes.data.car || null;
         setCar(fetchedCar);
 
+        // Fetch similar cars safely
         if (fetchedCar && fetchedCar.model) {
-          const similarQuery = new URLSearchParams({
-            model: fetchedCar.model,
-          }).toString();
+          const similarQuery = new URLSearchParams({ model: fetchedCar.model }).toString();
+          const similarRes = await axios.get(`${API_BASE}/api/cars/similar?${similarQuery}`, {
+            withCredentials: true,
+          });
 
-          const similarRes = await axios.get(
-            `${import.meta.env.VITE_API_URL}/api/cars/similar?${similarQuery}`,
-            { withCredentials: true }
-          );
-
-          const filteredSimilar = similarRes.data.cars.filter(
-            (c) => c._id !== fetchedCar._id
-          );
-
+          const allSimilar = Array.isArray(similarRes.data.cars) ? similarRes.data.cars : [];
+          const filteredSimilar = allSimilar.filter((c) => c._id !== fetchedCar._id);
           setSimilarCars(filteredSimilar);
         }
       } catch (error) {
@@ -76,19 +72,17 @@ const ProductDetails = () => {
     <div className="p-6">
       <div className="max-w-6xl mx-auto bg-white p-8 rounded-lg">
         <div className="flex flex-col md:flex-row gap-8">
-          {/* Car Image */}
           <div className="md:w-1/2">
             <img
-              src={car.image || "/placeholder.png"}
-              alt={car.name}
+              src={car.image && car.image.startsWith("http") ? car.image : "/placeholder.png"}
+              alt={car.name || "Car"}
               className="w-full h-auto object-cover rounded-lg shadow-md"
             />
           </div>
 
-          {/* Car Info */}
           <div className="md:w-1/2">
             <h1 className="text-3xl font-bold mb-2">{car.name}</h1>
-            <p className="text-2xl font-semibold text-gray-800 mb-4">Ksh {car.price}</p>
+            <p className="text-2xl font-semibold text-gray-800 mb-4">Ksh {car.price?.toLocaleString()}</p>
             <p className="text-gray-500 mb-6 border-b pb-4 leading-relaxed">{car.description}</p>
 
             <div className="mb-6">
@@ -121,30 +115,29 @@ const ProductDetails = () => {
               {isButtonDisabled ? "Adding to Cart..." : "Add to Cart"}
             </button>
 
-            {/* Specifications */}
             <div className="mt-8 border-t pt-6">
               <h3 className="text-lg font-bold mb-3 border-b pb-2">Car Specifications</h3>
               <table className="w-full text-left text-sm text-gray-600">
                 <tbody>
                   <tr className="border-b">
                     <td className="py-2 font-medium">Model</td>
-                    <td className="py-2">{car.model}</td>
+                    <td className="py-2">{car.model || "N/A"}</td>
                   </tr>
                   <tr className="border-b">
                     <td className="py-2 font-medium">Fuel Type</td>
-                    <td className="py-2">{car.fuelType}</td>
+                    <td className="py-2">{car.fuelType || "N/A"}</td>
                   </tr>
                   <tr className="border-b">
                     <td className="py-2 font-medium">Transmission</td>
-                    <td className="py-2">{car.transmission}</td>
+                    <td className="py-2">{car.transmission || "N/A"}</td>
                   </tr>
                   <tr className="border-b">
                     <td className="py-2 font-medium">Year</td>
-                    <td className="py-2">{car.year}</td>
+                    <td className="py-2">{car.year || "N/A"}</td>
                   </tr>
                   <tr>
                     <td className="py-2 font-medium">Location</td>
-                    <td className="py-2">{car.location}</td>
+                    <td className="py-2">{car.location || "N/A"}</td>
                   </tr>
                 </tbody>
               </table>
@@ -152,7 +145,6 @@ const ProductDetails = () => {
           </div>
         </div>
 
-        {/* Similar Cars Section */}
         {similarCars.length > 0 && (
           <div className="mt-20">
             <h2 className="text-2xl text-center font-bold mb-8 uppercase tracking-wider">
@@ -161,6 +153,7 @@ const ProductDetails = () => {
             <ProductsGrid products={similarCars} />
           </div>
         )}
+
         {similarCars.length === 0 && !loading && (
           <p className="text-center mt-20 text-gray-500">No similar cars found at this time.</p>
         )}
