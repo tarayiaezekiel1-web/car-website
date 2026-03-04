@@ -5,7 +5,7 @@
   "main": "backend/index.js",
   "scripts": {
     "build": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
-    "start": "node backend/server.js"
+    "start": "node backend/index.js"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.16",
