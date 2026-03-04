@@ -11,7 +11,8 @@ import { connectDB } from "./config/db.js";
 
 // --- ES MODULE PATH FIX ---
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename); 
+/*const __dirname = path.dirname(__filename); */
+const __dirname=path.resolve
 // --------------------------
 
 dotenv.config();
@@ -48,7 +49,7 @@ if (process.env.NODE_ENV === "production") {
   const frontendDistPath = path.resolve(__dirname, "../frontend/dist");
 
   // 3a. Serve the static assets (JS, CSS, images) from the 'dist' folder
-  app.use(express.static(frontendDistPath));
+  app.use(express.static(path.join()));
 
   // 3b. Fallback: Catch-all using app.use (The resilient method).
   // This will catch every request that wasn't handled by the static files or API routes above.
